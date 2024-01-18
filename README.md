@@ -1,3 +1,5 @@
+Notice: This is a fork of https://github.com/netsampler/goflow2 and adds an HTTP transport.
+
 # GoFlow2
 
 [![Build Status](https://github.com/netsampler/goflow2/workflows/Build/badge.svg)](https://github.com/netsampler/goflow2/actions?query=workflow%3ABuild)
@@ -85,6 +87,7 @@ Production:
 * Convert to protobuf or json
 * Prints to the console/file
 * Sends to Kafka and partition
+* Sends to HTTP endpoint
 
 Monitoring via Prometheus metrics
 
@@ -183,12 +186,25 @@ This will allow you to visualize the data in OpenObserve:
 
 ![OpenObserve](/graphics/netflow-top-items.png)
 
+Once you have run the above command, you can send sample data to the collector using the [nflow-generator](https://github.com/nerdalert/nflow-generator) :
+
+You can test the collector using the [nflow-generator](https://github.com/nerdalert/nflow-generator) to test its functionality:
+
+```shell
+./nflow-generator -t 127.0.0.1 -p 2055
+```
+
+```bash
 
 ### Docker
 
 You can also run directly with a container:
 ```
-$ sudo docker run -p 6343:6343/udp -p 2055:2055/udp -ti netsampler/goflow2:latest
+docker run -p 6343:6343/udp -p 2055:2055/udp -ti ghcr.io/openobserve/goflow2:v100.0.1 -transport=http \
+  -transport.http.destination=http://192.168.86.75:5080/api/default/gflow4/_json \
+  -transport.http.batchSize=100 \
+  -transport.http.auth.header=Authorization \
+  -transport.http.auth.credentials="Basic cm9vdEBleGFtcGxlLmNvbTpDb21wbGV4cGFzcyMxMjM="
 ```
 
 ### Mapping extra fields
