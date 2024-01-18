@@ -188,13 +188,11 @@ This will allow you to visualize the data in OpenObserve:
 
 Once you have run the above command, you can send sample data to the collector using the [nflow-generator](https://github.com/nerdalert/nflow-generator) :
 
-You can test the collector using the [nflow-generator](https://github.com/nerdalert/nflow-generator) to test its functionality:
+You can test the collector using the [nflow-generator](https://github.com/nerdalert/nflow-generator) to generate sample records:
 
 ```shell
 ./nflow-generator -t 127.0.0.1 -p 2055
 ```
-
-```bash
 
 ### Docker
 
